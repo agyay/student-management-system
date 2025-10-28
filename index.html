@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Management System</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h1>Student Management System</h1>
+    <hr>
+    <h2>Student List</h2>
+    <a th:href="@{/showNewStudentForm}" class="btn btn-primary btn-sm mb-3">Add Student</a>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Name</th>
+            <th>Roll No</th>
+            <th>Department</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="student : ${listStudents}">
+            <td th:text="${student.name}"></td>
+            <td th:text="${student.rollNo}"></td>
+            <td th:text="${student.department}"></td>
+            <td th:text="${student.email}"></td>
+            <td th:text="${student.phone}"></td>
+            <td>
+                <form th:action="@{/delete}" method="post" style="display:inline;">
+                    <input type="hidden" name="rollNo" th:value="${student.rollNo}" />
+                    <button type="submit" class="btn btn-sm btn-danger"
+                            onclick="return confirm('Delete student with roll no: ' + this.form.rollNo.value + '?')">
+                        Delete
+                    </button>
+                </form>
+                <a th:href="@{|/showFormForUpdate/${student.rollNo}|}" class="btn btn-sm btn-secondary">Edit</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
